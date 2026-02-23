@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxe 33 | Tienda Oficial</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIABLES DE DISEÑO --- */
+        :root {
+            --accent: #c5a059; /* Dorado Luxe */
+            --dark: #0a0a0a;
+            --white: #ffffff;
+            --gray: #f8f8f8;
+            --whatsapp: #25d366;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            /* APLICACIÓN DEL FONDO GENERAL */
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Esto hace que el fondo no se mueva */
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* --- PANTALLA DE BIENVENIDA (LOGIN) --- */
+        #login-page {
+            position: fixed;
+            inset: 0;
+            /* Fondo de login un poco más oscuro para resaltar la tarjeta */
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-card {
+            background: rgba(10, 10, 10, 0.85); /* Más transparente para ver el fondo */
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            text-align: center;
+            width: 85%;
+            max-width: 380px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(15px); /* Efecto cristal esmerilado */
+        }
+
+        .brand-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 2px solid var(--accent);
+            padding: 5px;
+            background: #000;
+            object-fit: cover;
+        }
+
+        .login-card h1 { 
+            font-family: 'Cinzel', serif; 
+            color: var(--accent); 
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .login-card p {
+            color: #ccc;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border: 1px solid #444;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--accent); }
+
+        .btn-gold {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8e6d2d 100%);
+            border: none;
+            color: #000;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4); }
+
+        /* --- NAVEGACIÓN (HEADER) --- */
+        header {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+
+        .header-brand { display: flex; align-items: center; gap: 12px; }
+        .logo-small { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--accent); }
+        .logo-text { font-family: 'Cinzel', serif; color: var(--accent); font-size: 1.4rem; letter-spacing: 1px; }
+
+        /* --- CATÁLOGO --- */
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); 
+            gap: 20px;
+            padding: 25px 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .catalog { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+        }
+
+        .perfume-card {
+            background: rgba(255, 255, 255, 0.9); /* Un poco de transparencia en las tarjetas */
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(5px);
+        }
+
+        .perfume-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+
+        .img-container { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #fff; }
+        .perfume-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+
+        .p-content { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; gap: 5px; }
+        .p-content h3 { margin: 0; font-size: 0.95rem; font-weight: 600; color: #111; }
+        .p-desc { font-size: 0.75rem; color: #555; line-height: 1.4; height: 32px; overflow: hidden; }
+
+        .p-price-area { margin-top: auto; padding-top: 10px; }
+        .p-old-price { text-decoration: line-through; color: #999; font-size: 0.8rem; margin-right: 6px; }
+        .p-price { font-size: 1.15rem; font-weight: 700; color: var(--dark); }
+
+        .btn-add-cart {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .btn-add-cart:hover { background: var(--accent); }
+
+        /* --- CARRITO (BOTÓN Y VENTANA) --- */
+        .cart-panel-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--dark);
+            color: var(--accent);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-weight: 700;
+            display: none;
+            z-index: 950;
+            border: 1px solid var(--accent);
+        }
+
+        #cart-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+
+        .cart-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 28px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            background: #f4f4f4;
+            border-radius: 30px;
+            padding: 4px;
+            gap: 12px;
+        }
+
+        .qty-btn {
+            width: 28px; height: 28px; border-radius: 50%; border: none;
+            background: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .btn-send {
+            background: var(--whatsapp);
+            color: white;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-page">
+        <div class="login-card">
+            <img src="logo.png" alt="Luxe 33" class="brand-logo" onerror="this.src='https://via.placeholder.com/100/000/c5a059?text=33'">
+            <h1>Luxe 33</h1>
+            <p>Perfumería Exclusiva</p>
+            <input type="text" id="login-name" placeholder="Tu nombre">
+            <input type="tel" id="login-phone" placeholder="Tu WhatsApp">
+            <button class="btn-gold" onclick="startApp()">Ingresar</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-brand">
+            <img src="logo.png" class="logo-small" onerror="this.style.display='none'">
+            <div class="logo-text">Luxe 33</div>
+        </div>
+        <div id="user-info" style="font-size: 0.8rem; font-weight: 400; color: var(--accent);"></div>
+    </header>
+
+    <div class="catalog" id="catalog-container"></div>
+
+    <div class="cart-panel-btn" id="cart-float" onclick="toggleCart()">
+        <i class="fa-solid fa-bag-shopping"></i> &nbsp; <span id="cart-count">0</span> PRODUCTOS
+    </div>
+
+    <div id="cart-modal">
+        <div class="cart-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="font-family:'Cinzel', serif; margin:0; font-size:1.4rem;">Tu Bolsa</h2>
+                <i class="fa-solid fa-xmark" onclick="toggleCart()" style="cursor:pointer; font-size:1.2rem; color:#999;"></i>
+            </div>
+            <div id="cart-items-list" style="max-height: 40vh; overflow-y: auto;"></div>
+            <div style="margin-top:25px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#888;">Total:</span>
+                <span id="cart-total" style="font-size:1.6rem; font-weight:700;">$0</span>
+            </div>
+            <button class="btn-send" onclick="sendToWhatsApp()">
+                <i class="fa-brands fa-whatsapp" style="font-size:1.4rem;"></i> CONFIRMAR PEDIDO
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCk7SBzh9YfsWzu1FimDSQjr5Sr1xo8Ces",
+            authDomain: "perfumes-luxe.firebaseapp.com",
+            databaseURL: "https://perfumes-luxe-default-rtdb.firebaseio.com",
+            projectId: "perfumes-luxe",
+            storageBucket: "perfumes-luxe.firebasestorage.app",
+            messagingSenderId: "1893279285",
+            appId: "1:1893279285:web:e985b980103ccfee02f37c"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        let cart = [];
+        let userData = JSON.parse(localStorage.getItem('luxe_user')) || null;
+
+        window.startApp = function() {
+            const name = document.getElementById('login-name').value;
+            const phone = document.getElementById('login-phone').value;
+            if(name && phone) {
+                userData = { name, phone };
+                localStorage.setItem('luxe_user', JSON.stringify(userData));
+                location.reload();
+            }
+        }
+
+        if(userData) {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('user-info').innerText = userData.name.toUpperCase();
+            
+            onValue(ref(db, 'perfumes'), (snapshot) => {
+                const container = document.getElementById('catalog-container');
+                container.innerHTML = '';
+                snapshot.forEach(child => {
+                    const p = child.val();
+                    container.innerHTML += `
+                        <div class="perfume-card">
+                            <div class="img-container"><img src="${p.img}"></div>
+                            <div class="p-content">
+                                <h3>${p.nombre}</h3>
+                                <p class="p-desc">${p.desc || ''}</p>
+                                <div class="p-price-area">
+                                    ${p.precioViejo ? `<span class="p-old-price">${p.precioViejo}</span>` : ''}
+                                    <span class="p-price">${p.precio}</span>
+                                </div>
+                                <button class="btn-add-cart" onclick="addToCart('${child.key}', '${p.nombre}', '${p.precio}')">
+                                    <i class="fa-solid fa-plus"></i> AGREGAR
+                                </button>
+                            </div>
+                        </div>`;
+                });
+            });
+        }
+
+        window.addToCart = function(id, name, priceStr) {
+            const price = parseInt(priceStr.replace(/[^0-9]/g, ""));
+            const existing = cart.find(item => item.id === id);
+            if(existing) existing.qty++;
+            else cart.push({ id, name, price, qty: 1 });
+            updateCartUI();
+            document.getElementById('cart-float').style.display = 'block';
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cart-items-list');
+            const count = document.getElementById('cart-count');
+            const totalDisplay = document.getElementById('cart-total');
+            let total = 0, items = 0;
+            list.innerHTML = '';
+            cart.forEach((item, index) => {
+                total += item.price * item.qty;
+                items += item.qty;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <div style="font-weight:600; font-size:0.9rem;">${item.name}</div>
+                            <div style="font-size:0.8rem; color:#888;">$${item.price.toLocaleString()}</div>
+                        </div>
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)"><i class="fa-solid fa-minus"></i></button>
+                            <span style="font-weight:600;">${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>`;
+            });
+            count.innerText = items;
+            totalDisplay.innerText = `$${total.toLocaleString()}`;
+            if(items === 0) document.getElementById('cart-float').style.display = 'none';
+        }
+
+        window.changeQty = (idx, delta) => {
+            cart[idx].qty += delta;
+            if(cart[idx].qty <= 0) cart.splice(idx, 1);
+            updateCartUI();
+        }
+
+        window.toggleCart = () => {
+            const m = document.getElementById('cart-modal');
+            m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        window.sendToWhatsApp = () => {
+            let t = 0, txt = `🛍️ *PEDIDO: LUXE 33*%0A━━━━━━━━━━━━━━━%0A👤 *Cliente:* ${userData.name}%0A%0A`;
+            cart.forEach(i => {
+                txt += `• ${i.qty}x ${i.name} ($${(i.price*i.qty).toLocaleString()})%0A`;
+                t += i.price*i.qty;
+            });
+            txt += `%0A━━━━━━━━━━━━━━━%0A💰 *TOTAL: $${t.toLocaleString()}*`;
+            window.open(`https://wa.me/59898324329?text=${txt}`, '_blank');
+        }
+    </script>
+</body>
+</html>
